@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        font-family: sans-serif;
+      }
+      body {
+        height: 100vh;
+      }
+      article {
+        width: 900px;
+        height: 100%;
+        margin: auto;
+      }
+      .column {
+        float: left;
+        width: 60%;
+        padding: 10px;
+        height: 160px;
+        border-right: 1px solid;
+      }
+      .column1 {
+        float: left;
+        width: 40%;
+        padding: 10px;
+        height: 150px;
+      }
+      .fields {
+        margin-top: 10px;
+      }
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+      .invoice-item {
+       border-bottom: 1px solid black;
+      }
+      .invoice-item1 {
+        border-bottom: 1px solid black;
+        height: 160px;
+      }
+      thead tr td {
+         border-left : 1px solid black;
+      }
+
+      .quantity {
+        width: 30px;
+      }
+      .price {
+        min-width: 30px;
+      }
+      .product {
+        width: 40px;
+      }
+      .invoice-content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      h2 {
+        font-size: 18px;
+        text-transform: uppercase;
+      }
+      strong {
+        font-size: 16px;
+      }
+      h1 {
+        text-align: left;
+      }
+      h2 {
+        margin-right: 5px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+      }
+
+      td:first-child {
+        border-left: none;
+      }
+
+      thead tr {
+        border-bottom: 1px solid #000;
+        background-color: gray;
+        text-transform: uppercase;
+        font-weight: bold;
+        height: 30px;
+      }
+
+      tbody {
+         min-height: 200px;
+      }
+
+      tbody td {
+       border-left: 1px solid black;
+       height: 200px;
+      }
+
+      body {
+      border: 1px solid black;
+      }
+
+      tfoot {
+       text-align:left;
+       background-color: grey;
+      }
+
+      .total {
+      text-align:right;
+      border-bottom: 1px solid black;
+      }
+      .amount {
+      text-align:center;
+      border-bottom: 1px solid black;
+      }
+
+
+
+    </style>
+</head>
+<article>
+    <body>
+    <div class="grid-container">
+        <div class="invoice-item grid-item-1">
+            <h2 th:text="'Invoice'"></h2>
+        </div>
+        <div class="row invoice-item1">
+            <div class="column">
+                <h1 th:text="'SR Foods'"></h1>
+                <div class="fields">
+                    <label th:text="'Address :'"></label>
+                    <strong th:text=" ${srDetails.address}"> </strong>
+                </div>
+                <div class="fields">
+                    <label th:text="'Ph No :'"></label>
+                    <strong th:text=" ${srDetails.phoneNumber}"> </strong>
+                </div>
+                <div class="fields">
+                    <label class="fields" th:text="'GST No :'"></label>
+                    <strong class="fields" th:text=" ${srDetails.gstNumber}">
+                    </strong>
+                </div>
+            </div>
+
+            <div class="column1">
+                <div class="invoice-content">
+                    <label th:text="'Invoice No : '"></label>
+                    <strong th:text=" ${invoiceNumber}"></strong>
+                </div>
+                <div class="invoice-content">
+                    <label th:text="'Date : '"></label>
+                    <strong th:text=" ${date}"></strong>
+                </div>
+            </div>
+        </div>
+        <div class="row invoice-item1">
+            <div class="column">
+                <div class="invoice-content">
+                    <h5 th:text="'Customer: '"></h5>
+                    <h1 th:text=" ${hotelDetails.customerName}"></h1>
+                </div>
+                <div class="invoice-content">
+                    <label th:text="'Address: '"></label>
+                    <strong th:text=" ${hotelDetails.customerAddress}"></strong>
+                </div>
+            </div>
+            <div class="column1">
+                <div class="invoice-content">
+                    <label th:text="'GST No : '"></label>
+                    <strong th:text=" ${hotelDetails.customerGstNumber}"></strong>
+                </div>
+                <div class="invoice-content">
+                    <label th:text="'Phone No : '"></label>
+                    <strong th:text=" ${hotelDetails.customerPhoneNumber}"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <td>Product Name</td>
+                <td class="quantity">Quantity</td>
+                <td class="price">Price</td>
+                <td class="price">Amount</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="productDetail : ${productDetails}">
+                <td th:text="${productDetail.productName}"></td>
+                <td th:text="${productDetail.quantity}"></td>
+                <td th:text="${productDetail.price}"></td>
+                <td th:text="${productDetail.amount}"></td>
+            </tr>
+            </tbody>
+            <tfoot >
+            <tr style="height:50px;">
+                <td style="border-bottom: 1px solid black;"></td>
+                <td colspan="2" class="total">Total</td>
+                <td class="amount">1200.00</td>
+            </tr>
+            <tr style="height:50px;">
+                <td colspan="2" style="padding-left: 3px;">Customer sign</td>
+                <td colspan="2">SR Foods </td>
+            </tr>
+            </tfoot>
+
+        </table>
+    </div>
+    </body>
+</article>
+</html>
